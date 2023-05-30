@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import toast from "react-hot-toast";
 import { ImSpinner2 } from "react-icons/im";
+import { saveUser } from "../../api/auth";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const Register = () => {
             toast.success("Successfully Register")
             updateUserProfile(name, imageUrl)
               .then(() => {
+                saveUser(result.user)
                 console.log('user update')
               } )
               .catch((error) => {
@@ -69,6 +71,7 @@ const Register = () => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
       })
       .catch((error) => {

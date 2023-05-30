@@ -5,6 +5,8 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import RoomDetails from "../Pages/RoomDetails/RoomDetails";
 import PrivateRoute from "./PrivateRoute";
+import Dashboard from "../layouts/Dashboard";
+import AddRoom from "../Pages/Dashboard/AddRoom";
 
 export const router = createBrowserRouter([
   {
@@ -33,4 +35,14 @@ export const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "/dashboard/add-room",
+        element: <AddRoom />
+      }
+    ]
+  }
 ]);

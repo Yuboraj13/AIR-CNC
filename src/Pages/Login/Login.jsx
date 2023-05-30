@@ -5,6 +5,7 @@ import { useContext, useRef } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import toast from "react-hot-toast";
 import { ImSpinner2 } from "react-icons/im";
+import { saveUser } from "../../api/auth";
 
 const Login = () => {
   const emailRef = useRef();
@@ -18,6 +19,7 @@ const Login = () => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
       })
       .catch((error) => {
