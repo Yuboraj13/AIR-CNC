@@ -6,7 +6,7 @@ const AddRoomForm = ({
   handleSubmit,
   dates,
   handleDates,
-  loading = false,
+  loading,
   handleImageChange,
   uploadButtonText,
 }) => {
@@ -50,7 +50,7 @@ const AddRoomForm = ({
               <label htmlFor="location" className="block text-gray-600">
                 Select Availability Range
               </label>
-              <DateRange rangeColors={["#F43F5E"]} />
+              <DateRange ranges={[dates]} onChange={handleDates} rangeColors={["#F43F5E"]} />
             </div>
           </div>
           <div className="space-y-6">
@@ -73,6 +73,9 @@ const AddRoomForm = ({
                 <div className="flex flex-col w-max mx-auto text-center">
                   <label>
                     <input
+                      onChange={(event) => {
+                        handleImageChange(event.target.files[0]);
+                      }}
                       className="text-sm cursor-pointer w-36 hidden"
                       type="file"
                       name="image"
@@ -81,7 +84,7 @@ const AddRoomForm = ({
                       hidden
                     />
                     <div className="bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-500">
-                      Upload Image
+                      {uploadButtonText}
                     </div>
                   </label>
                 </div>
