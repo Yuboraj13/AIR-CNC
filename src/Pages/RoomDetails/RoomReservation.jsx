@@ -6,9 +6,11 @@ import BookingModal from "../../components/Modal/BookingModal";
 import { formatDistance } from "date-fns";
 import { addBooking, updateStatus } from "../../api/bookings";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const RoomReservation = ({ roomData }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   // total price calculation
   const totalPrice =
@@ -50,7 +52,7 @@ const RoomReservation = ({ roomData }) => {
           .then((data) => {
             console.log(data);
             toast.success("Booking Successful!");
-            Navigate("/dashboard/mybookings");
+            navigate("/dashboard/mybooking");
             closeModal();
           })
           .catch((error) => console.log(error));
