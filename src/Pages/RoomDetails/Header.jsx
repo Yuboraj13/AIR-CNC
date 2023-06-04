@@ -2,7 +2,6 @@ import React from "react";
 import Heading from "../../components/Heading/Heading";
 
 const Header = ({ roomData }) => {
-  console.log(roomData)
   return (
     <>
       <Heading

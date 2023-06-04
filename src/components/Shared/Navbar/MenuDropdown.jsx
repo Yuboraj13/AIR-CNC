@@ -8,7 +8,7 @@ import { becomeHost } from "../../../api/auth";
 import { toast } from "react-hot-toast";
 
 const MenuDropdown = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, role, setRole } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState(false);
   const toggleOpen = useCallback(() => {
@@ -19,7 +19,8 @@ const MenuDropdown = () => {
     becomeHost(email).then((data) => {
       console.log(data);
       toast.success("You are host now, Post Rooms!");
-      closeModal()
+      setRole("host");
+      closeModal();
     });
   };
 
@@ -27,14 +28,20 @@ const MenuDropdown = () => {
     setModal(false);
   };
 
+
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
-        <div
-          onClick={() => setModal(true)}
-          className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
-        >
-          AirCNC your home
+        <div className="hidden cursor-pointer md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition">
+          {!role && (
+            <button
+              onClick={() => setModal(true)}
+              className="cursor-pointer"
+              disabled={!user}
+            >
+              AirCNC your home
+            </button>
+          )}
         </div>
         <div
           onClick={toggleOpen}
@@ -58,7 +65,10 @@ const MenuDropdown = () => {
             {user ? (
               <>
                 <div
-                  onClick={logOut}
+                  onClick={() => {
+                    setRole(null)
+                    logOut()
+                  }}
                   className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer"
                 >
                   Logout
