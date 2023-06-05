@@ -2,12 +2,13 @@ import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "./Avatar";
 import { useCallback, useContext, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HostModal from "../../Modal/HostModal";
 import { becomeHost } from "../../../api/auth";
 import { toast } from "react-hot-toast";
 
 const MenuDropdown = () => {
+  const navigate = useNavigate();
   const { user, logOut, role, setRole } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState(false);
@@ -20,6 +21,7 @@ const MenuDropdown = () => {
       console.log(data);
       toast.success("You are host now, Post Rooms!");
       setRole("host");
+      navigate("/dashboard/add-room");
       closeModal();
     });
   };
@@ -27,7 +29,6 @@ const MenuDropdown = () => {
   const closeModal = () => {
     setModal(false);
   };
-
 
   return (
     <div className="relative">
@@ -54,7 +55,7 @@ const MenuDropdown = () => {
         </div>
       </div>
       {isOpen && (
-        <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
+        <div className="absolute rounded-xl shadow-md w-[40vw] md:w-[10vw] bg-white overflow-hidden right-0 top-12 text-sm">
           <div className="flex flex-col cursor-pointer">
             <Link
               to="/"
@@ -66,8 +67,8 @@ const MenuDropdown = () => {
               <>
                 <div
                   onClick={() => {
-                    setRole(null)
-                    logOut()
+                    setRole(null);
+                    logOut();
                   }}
                   className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer"
                 >

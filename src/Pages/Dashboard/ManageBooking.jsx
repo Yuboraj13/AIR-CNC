@@ -1,27 +1,25 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
-import RoomDataRow from "../../components/Dashboard/RoomDataRow";
-import { getRooms } from "../../api/rooms";
+import { getHostBookings } from "../../api/bookings";
+import TableRow from "./TableRow";
 import EmptyState from "../../components/Shared/EmptyState/EmptyState";
 
-const MyListings = () => {
-  const [myListing, setMyListing] = useState([]);
+const ManageBooking = () => {
+  const [myBookings, setMyBookings] = useState([]);
   const { user } = useContext(AuthContext);
-  const fetchListing = () => {
-    getRooms(user?.email).then((data) => {
-      setMyListing(data);
+  const fetchBookings = () => {
+    getHostBookings(user?.email).then((data) => {
+      setMyBookings(data);
     });
   };
 
-  console.log(myListing);
-
   useEffect(() => {
-    fetchListing();
+    fetchBookings();
   }, [user]);
 
   return (
     <>
-      {myListing && Array.isArray(myListing) && myListing.length > 0 ? (
+      {myBookings && Array.isArray(myBookings) && myBookings.length > 0 ? (
         <div className="container mx-auto px-4 sm:px-8">
           <div className="py-8">
             <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -57,28 +55,22 @@ const MyListings = () => {
                         scope="col"
                         className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                       >
-                        To add
+                        To
                       </th>
                       <th
                         scope="col"
                         className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                       >
-                        Delete
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
-                      >
-                        Update
+                        Action
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {myListing.map((listing) => (
-                      <RoomDataRow
-                        key={listing._id}
-                        listing={listing}
-                        fetchListing={fetchListing}
+                    {myBookings.map((booking) => (
+                      <TableRow
+                        key={booking._id}
+                        booking={booking}
+                        fetchBookings={fetchBookings}
                       />
                     ))}
                   </tbody>
@@ -89,13 +81,13 @@ const MyListings = () => {
         </div>
       ) : (
         <EmptyState
-          message={"You did not add any room yet!"}
-          address={"/dashboard/add-room"}
-          label={"Add Room"}
+          message={"No Booking Available!"}
+          address={"/"}
+          label={"Go Back"}
         />
       )}
     </>
   );
 };
 
-export default MyListings;
+export default ManageBooking;
