@@ -12,6 +12,7 @@ import {
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
 import { getRole } from "../api/auth";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
@@ -45,6 +46,7 @@ const AuthProvider = ({ children }) => {
 
   const logOut = () => {
     setLoading(true);
+    localStorage.removeItem('access-token');
     return signOut(auth);
   };
 
@@ -58,7 +60,29 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+      if (currentUser) {
+        axios
+          .post(`${import.meta.env.VITE_API_URL}/jwt`, {
+            email: currentUser.email,
+          })
+          .then((data) => {
+            localStorage.setItem('access-token', data.data.token);
+            setLoading(false);
+          });
+        // fetch(`${import.meta.env.VITE_API_URL}/jwt`, {
+        //   method: "POST",
+        //   headers: {
+        //     "content-type": "application/json",
+        //   },
+        //   body: JSON.stringify({ email: currentUser?.email }),
+        // })
+        //   .then((res) => res.json())
+        //   .then((data) => {
+        //     localStorage.setItem('access-token', data.token)
+        //   });
+      } else {
+        localStorage.removeItem("access-token");
+      }
     });
     return () => {
       return unsubscribe();

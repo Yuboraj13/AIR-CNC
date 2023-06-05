@@ -3,10 +3,18 @@ import { AuthContext } from "../../providers/AuthProvider";
 import RoomDataRow from "../../components/Dashboard/RoomDataRow";
 import { getRooms } from "../../api/rooms";
 import EmptyState from "../../components/Shared/EmptyState/EmptyState";
+import { useAxiosSecure } from "../../hook/useAxiosSecure";
 
 const MyListings = () => {
+  const [axiosSecure] = useAxiosSecure();
   const [myListing, setMyListing] = useState([]);
   const { user } = useContext(AuthContext);
+
+
+
+  // get request using axios
+  axiosSecure.get('/rooms')
+
   const fetchListing = () => {
     getRooms(user?.email).then((data) => {
       setMyListing(data);

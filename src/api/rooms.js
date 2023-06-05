@@ -25,21 +25,25 @@ export const getDetailsRoom = async (id) => {
 
 export const getRooms = async (email) => {
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/rooms/${email}`
+    `${import.meta.env.VITE_API_URL}/rooms/${email}`,
+    {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("access-token")}`,
+      },
+    }
   );
   const data = await response.json();
   return data;
 };
 
 // Delete a room
-export const deleteRoom = async id => {
+export const deleteRoom = async (id) => {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/rooms/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
     },
-  })
-  const result = await response.json()
-  return result
-}
-
+  });
+  const result = await response.json();
+  return result;
+};
