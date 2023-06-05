@@ -7,8 +7,9 @@ import RoomDetails from "../Pages/RoomDetails/RoomDetails";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../layouts/Dashboard";
 import AddRoom from "../Pages/Dashboard/AddRoom";
-import { getAllRooms } from "../api/rooms";
+import { getDetailsRoom } from "../api/rooms";
 import MyBookings from "../Pages/Dashboard/MyBookings";
+import MyListings from "../Pages/Dashboard/MyListings";
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ export const router = createBrowserRouter([
             <RoomDetails />
           </PrivateRoute>
         ),
-        loader: ({ params }) => getAllRooms(params.id),
+        loader: ({ params }) => getDetailsRoom(params.id),  
       },
     ],
   },
@@ -47,12 +48,20 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "/dashboard",
+        element: <MyBookings />,
+      },
+      {
         path: "/dashboard/add-room",
         element: <AddRoom />,
       },
       {
         path: "/dashboard/mybooking",
-        element: <MyBookings />
+        element: <MyBookings />,
+      },
+      {
+        path: "/dashboard/mylistings",
+        element: <MyListings />,
       },
     ],
   },

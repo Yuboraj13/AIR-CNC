@@ -14,14 +14,14 @@ const RoomInfo = ({roomData}) => {
             gap-2
           "
         >
-          <div>{roomData[0].host.name}</div>
+          <div>{roomData.host.name}</div>
 
           <img
             className="rounded-full"
             height="30"
             width="30"
             alt="Avatar"
-            src={roomData[0].host.image}
+            src={roomData.host.image}
           />
         </div>
         <div
@@ -34,9 +34,9 @@ const RoomInfo = ({roomData}) => {
             text-neutral-500
           "
         >
-          <div>{roomData[0].guest} guest</div>
-          <div>{roomData[0].bedrooms} rooms</div>
-          <div>{roomData[0].bathrooms} bathrooms</div>
+          <div>{roomData.guest} guest</div>
+          <div>{roomData.bedrooms} rooms</div>
+          <div>{roomData.bathrooms} bathrooms</div>
         </div>
       </div>
 
@@ -45,7 +45,7 @@ const RoomInfo = ({roomData}) => {
         className="
       text-lg font-light text-neutral-500"
       >
-        {roomData[0].description}
+        {roomData.description}
       </div>
       <hr />
     </div>

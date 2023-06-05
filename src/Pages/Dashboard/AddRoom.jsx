@@ -3,6 +3,7 @@ import AddRoomForm from "../../components/Forms/AddRoomForm";
 import { imageUpload } from "../../api/utils";
 import { AuthContext } from "../../providers/AuthProvider";
 import { addRoom } from "../../api/rooms";
+import { toast } from "react-hot-toast";
 
 const AddRoom = () => {
   const { user } = useContext(AuthContext);
@@ -54,7 +55,13 @@ const AddRoom = () => {
         console.log(roomData);
         // post room data to server
         addRoom(roomData)
-          .then((data) => console.log(data))  
+          .then((data) => {
+            console.log(data);
+            setUploadButtonText("Uploaded");
+            setLoading(false);
+            toast.success("Room Added!");
+            form.reset();
+          })
           .catch((error) => console.log(error.message));
         setLoading(false);
       })
