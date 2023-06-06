@@ -27,7 +27,7 @@ const RoomReservation = ({ roomData }) => {
     key: "selection",
   });
 
-  const { user, role } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [bookingInfo, setBookingInfo] = useState({
     guest: { name: user.displayName, email: user.email, image: user.photoURL },
     host: roomData.host.email,

@@ -9,9 +9,11 @@ import Heading from "../Heading/Heading";
 import { getAllRooms } from "../../api/rooms";
 
 const Rooms = () => {
+  // question about useSearchParams
   const [params, setParams] = useSearchParams();
+  console.log(params);
   const category = params.get("category");
-
+  console.log(category);
   const [loading, setLoading] = useState(false);
   const [rooms, setRooms] = useState([]);
   useEffect(() => {
